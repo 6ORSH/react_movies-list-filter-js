@@ -1,19 +1,23 @@
 import './App.scss';
+import { useState } from 'react';
 import { MoviesList } from './components/MoviesList';
 import moviesFromServer from './api/movies.json';
-import { useState } from 'react';
 
 export const App = () => {
   const [visibleMovies, setVisibleMovies] = useState(moviesFromServer);
+
+  const matchesQuery = (movie, q) => {
+    const title = (movie.title || '').toString().toLowerCase();
+    const description = (movie.description || '').toString().toLowerCase();
+
+    return title.includes(q) || description.includes(q);
+  };
+
   function searchMovies(inputValue) {
     const query = inputValue.toLowerCase().trim();
+
     setVisibleMovies(
-      moviesFromServer.filter(
-        movie =>
-          // TODO: refactor
-          movie.title.toLowerCase().includes(query) ||
-          movie.description.toLowerCase().includes(query),
-      ),
+      moviesFromServer.filter(movie => matchesQuery(movie, query)),
     );
   }
 
