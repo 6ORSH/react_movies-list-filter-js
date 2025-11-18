@@ -6,11 +6,11 @@ import moviesFromServer from './api/movies.json';
 export const App = () => {
   const [visibleMovies, setVisibleMovies] = useState(moviesFromServer);
 
-  const matchesQuery = (movie, q) => {
+  const matchesQuery = (movie, query) => {
     const title = (movie.title || '').toString().toLowerCase();
     const description = (movie.description || '').toString().toLowerCase();
 
-    return title.includes(q) || description.includes(q);
+    return title.includes(query) || description.includes(query);
   };
 
   function searchMovies(inputValue) {
